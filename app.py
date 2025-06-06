@@ -19,11 +19,11 @@ if "df" not in st.session_state:
     st.session_state.df = create_empty_df()
 
 st.subheader("➕ Add New Deliverable")
+role = st.selectbox("Role", ["Lead", "Contributor"])
 with st.form("add_form"):
     col1, col2, col3 = st.columns(3)
     with col1:
         project = st.text_input("Project Name")
-        role = st.selectbox("Role", ["Lead", "Contributor"])
         priority = st.selectbox("Priority", ["Low", "Medium", "High"])
     with col2:
         task = st.text_input("Task/Deliverable")
@@ -34,6 +34,11 @@ with st.form("add_form"):
         hard_deadline = st.date_input("Hard Deadline", format="DD/MM/YYYY")
         actual_completion = st.date_input("Actual Completion", value=datetime.today(), format="DD/MM/YYYY")
         
+    deliverable_leader = ""
+    if role == "Contributor":
+        deliverable_leader = st.text_input("Deliverable Leader")
+
+    
     deliverable_leader = ""
     if role == "Contributor":
         deliverable_leader = st.text_input("Deliverable Leader")
