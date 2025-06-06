@@ -20,6 +20,10 @@ if "df" not in st.session_state:
 
 st.subheader("➕ Add New Deliverable")
 role = st.selectbox("Role", ["Lead", "Contributor"])
+
+    # placeholder για το πεδίο Deliverable Leader
+    leader_placeholder = st.empty()
+
 with st.form("add_form"):
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -36,12 +40,18 @@ with st.form("add_form"):
         
     deliverable_leader = ""
     if role == "Contributor":
-        deliverable_leader = st.text_input("Deliverable Leader")
-
+        
     
     deliverable_leader = ""
     if role == "Contributor":
-        deliverable_leader = st.text_input("Deliverable Leader")
+        
+    
+    # Μέσα στο form
+    deliverable_leader = ""
+    if role == "Contributor":
+        deliverable_leader = leader_placeholder.text_input("Deliverable Leader", key="deliverable_leader")
+    else:
+        leader_placeholder.text_input("Deliverable Leader", value="", disabled=True, key="deliverable_leader")
 
     comments = st.text_input("Comments")
 
