@@ -36,12 +36,12 @@ with st.form("add_form"):
         
     deliverable_leader = ""
     if role == "Contributor":
-        deliverable_leader = st.text_input("Deliverable Leader", key="leader")
+        deliverable_leader = st.text_input("Deliverable Leader")
 
     
     deliverable_leader = ""
     if role == "Contributor":
-        deliverable_leader = st.text_input("Deliverable Leader", key="leader")
+        deliverable_leader = st.text_input("Deliverable Leader")
 
     comments = st.text_input("Comments")
 
