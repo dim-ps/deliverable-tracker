@@ -30,9 +30,9 @@ with st.form("add_form"):
         description = st.text_area("Description")
         status = st.selectbox("Status", ["Not Started", "In Progress", "Completed", "Delayed"])
     with col3:
-        soft_deadline = st.date_input("Soft Deadline")
-        hard_deadline = st.date_input("Hard Deadline")
-        actual_completion = st.date_input("Actual Completion", value=datetime.today())
+        soft_deadline = st.date_input("Soft Deadline", format="DD/MM/YYYY")
+        hard_deadline = st.date_input("Hard Deadline", format="DD/MM/YYYY")
+        actual_completion = st.date_input("Actual Completion", value=datetime.today(), format="DD/MM/YYYY")
         comments = st.text_input("Comments")
 
     submitted = st.form_submit_button("Add Deliverable")
@@ -103,7 +103,7 @@ calendar_df = calendar_df.rename(columns={"Hard Deadline": "date", "Task/Deliver
 calendar_df["date"] = pd.to_datetime(calendar_df["date"], errors='coerce')
 calendar_df["name"] = calendar_df["Project Name"] + " - " + calendar_df["name"]
 calendar_df["date_str"] = calendar_df["date"].dt.strftime("%d/%m/%Y")
-st.dataframe(calendar_df[["date_str", "name"]].sort_values("date"), use_container_width=True)
+st.dataframe(calendar_df.sort_values("date")[["date_str", "name"]], use_container_width=True)
 
 st.subheader("📈 Gantt Chart")
 if not filtered_df.empty:
