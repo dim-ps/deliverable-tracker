@@ -52,7 +52,7 @@ with st.form("add_form"):
             "Priority": priority,
             "Comments": comments
         }
-        st.session_state.df = st.session_state.df.append(new_row, ignore_index=True)
+        st.session_state.df = pd.concat([st.session_state.df, pd.DataFrame([new_row])], ignore_index=True)
         st.success("Deliverable added!")
 
 # Εισαγωγή από αρχείο Excel
