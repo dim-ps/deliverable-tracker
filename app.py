@@ -10,7 +10,7 @@ st.title("📋 Project Deliverables Tracker")
 
 def create_empty_df():
     return pd.DataFrame(columns=[
-        "Project Name", "Task/Deliverable", "Description", "Role", "Status",
+        "Project Name", "Task/Deliverable", "Description", "Role", "Deliverable Leader", "Status",
         "Soft Deadline", "Hard Deadline", "Actual Completion",
         "Priority", "Comments"
     ])
@@ -33,7 +33,12 @@ with st.form("add_form"):
         soft_deadline = st.date_input("Soft Deadline", format="DD/MM/YYYY")
         hard_deadline = st.date_input("Hard Deadline", format="DD/MM/YYYY")
         actual_completion = st.date_input("Actual Completion", value=datetime.today(), format="DD/MM/YYYY")
-        comments = st.text_input("Comments")
+        
+    deliverable_leader = ""
+    if role == "Contributor":
+        deliverable_leader = st.text_input("Deliverable Leader")
+
+    comments = st.text_input("Comments")
 
     submitted = st.form_submit_button("Add Deliverable")
     if submitted:
@@ -42,6 +47,7 @@ with st.form("add_form"):
             "Task/Deliverable": task,
             "Description": description,
             "Role": role,
+            "Deliverable Leader": deliverable_leader if role == "Contributor" else "",
             "Status": status,
             "Soft Deadline": soft_deadline,
             "Hard Deadline": hard_deadline,
