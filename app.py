@@ -19,11 +19,14 @@ if "df" not in st.session_state:
     st.session_state.df = create_empty_df()
 
 st.subheader("➕ Add New Deliverable")
+
+# Επιλογή ρόλου (πάνω από τη φόρμα)
 role = st.selectbox("Role", ["Lead", "Contributor"])
 
-    # placeholder για το πεδίο Deliverable Leader
-    leader_placeholder = st.empty()
+# Placeholder για το πεδίο Deliverable Leader
+leader_placeholder = st.empty()
 
+# Φόρμα προσθήκης παραδοτέου
 with st.form("add_form"):
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -37,24 +40,14 @@ with st.form("add_form"):
         soft_deadline = st.date_input("Soft Deadline", format="DD/MM/YYYY")
         hard_deadline = st.date_input("Hard Deadline", format="DD/MM/YYYY")
         actual_completion = st.date_input("Actual Completion", value=datetime.today(), format="DD/MM/YYYY")
-        
-    deliverable_leader = ""
-    if role == "Contributor":
-        
-    
-    deliverable_leader = ""
-    if role == "Contributor":
-        
-    
-    # Μέσα στο form
-    deliverable_leader = ""
+
     if role == "Contributor":
         deliverable_leader = leader_placeholder.text_input("Deliverable Leader", key="deliverable_leader")
     else:
+        deliverable_leader = ""
         leader_placeholder.text_input("Deliverable Leader", value="", disabled=True, key="deliverable_leader")
 
     comments = st.text_input("Comments")
-
     submitted = st.form_submit_button("Add Deliverable")
     if submitted:
         new_row = {
@@ -62,7 +55,7 @@ with st.form("add_form"):
             "Task/Deliverable": task,
             "Description": description,
             "Role": role,
-            "Deliverable Leader": deliverable_leader if role == "Contributor" else "",
+            "Deliverable Leader": deliverable_leader,
             "Status": status,
             "Soft Deadline": soft_deadline,
             "Hard Deadline": hard_deadline,
@@ -72,6 +65,7 @@ with st.form("add_form"):
         }
         st.session_state.df = pd.concat([st.session_state.df, pd.DataFrame([new_row])], ignore_index=True)
         st.success("Deliverable added!")
+
 
 st.subheader("📤 Import from Excel")
 uploaded_file = st.file_uploader("Choose an Excel file", type="xlsx")
@@ -146,4 +140,3 @@ if st.button("Export to Excel"):
         file_name="deliverables_tracker.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-
